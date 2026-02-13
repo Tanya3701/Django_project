@@ -12,7 +12,33 @@ git clone https://github.com/username/project-x.git
 pip install -r requirements.txt
 ```
 ## Содержание:
-### Главная страница
+### Каталог
 #### Функционал:
+
+- class Category(models.Model):
+
+    """Класс категории"""
+_______________________
+
+- class Product(models.Model):
+
+    """Класс продукты""
+_______________________
+
+- class Command(BaseCommand):
+
+    """Команда для наполнения базы данных"""
+_______________________
+
+- class Command(BaseCommand):
+
+    """Команда для наполнения базы данных из фикстуры"""
+
+
+
+
+
+
+
 
 

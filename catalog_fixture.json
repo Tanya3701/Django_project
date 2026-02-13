@@ -1,0 +1,96 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "category_name": "Диваны",
+        "description": "Разные диваны"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+        "category_name": "Столы",
+        "description": "Разные столы"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "product_name": "Синий",
+        "description": "Синий диван",
+        "image": "blue.jpg",
+        "category": 3,
+        "price": "15000.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "product_name": "Желтый",
+        "description": "Желтый диван",
+        "image": "yellow.jpg",
+        "category": 3,
+        "price": "20000.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "product_name": "Белый",
+        "description": "Белый диван",
+        "image": "white.jpg",
+        "category": 3,
+        "price": "21000.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "product_name": "Круглый",
+        "description": "Круглый стол",
+        "image": "round.jpg",
+        "category": 4,
+        "price": "2100.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "product_name": "Кухонный",
+        "description": "Кухонный стол",
+        "image": "kitchen.jpg",
+        "category": 4,
+        "price": "5100.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "product_name": "Письменный",
+        "description": "Письменный стол",
+        "image": "written.jpg",
+        "category": 4,
+        "price": "7000.00",
+        "created_at": "2026-02-09",
+        "updated_at": "2026-02-09"
+    }
+}
+]
