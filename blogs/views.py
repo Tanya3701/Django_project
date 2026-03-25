@@ -28,7 +28,7 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     """Класс представления для создания блогов"""
     model = Blog
-    fields = ("header", "content", "preview" "published")
+    fields = ("header", "content", "preview", "published")
     success_url = reverse_lazy("blogs:blog_list")
 
 
