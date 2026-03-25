@@ -1,27 +1,34 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView)
 
 from catalog.models import Product
 
 
-def home(request):
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "home.html", context)
+class ProductListView(ListView):
+    model = Product
 
 
-def contacts(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    return render(request, "contacts.html")
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def product_info(request, pk):
-    product = Product.objects.get(pk=pk)
-    context = {"product": product}
-    return render(request, "product_info.html", context)
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('product_name', 'description', 'image', 'price', 'category')
+    success_url = reverse_lazy('catalog:product_list')
 
 
-def base(request):
-    return render(request, "base.html")
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('product_name', 'description', 'image', 'price', 'category')
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ContactsView(TemplateView):
+    template_name = 'catalog/contacts.html'
