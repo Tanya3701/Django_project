@@ -17,6 +17,7 @@
           <img src="{{ product.image | media_filter }} " class="img-fluid" alt={{product.name}} >
             <div class="card-body" >
               <p class="text-center">{{product.product_name}}</p>
+              <p class="text-success">Описание: <strong class="text-dark">{{product.description | truncatechars:100 }}</strong></p>
               <div class="d-flex justify-content-between align-items-center">
               <div class="card-footer">
               <a class="btn btn-warning" href="{% url 'catalog:product_detail' product.pk %}" role="button">Подробнее</a>

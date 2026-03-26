@@ -8,7 +8,7 @@
             <img src="{{ product.image | media_filter }} " class="img-fluid" alt={{product.name}} >
             <div class="card-body">
                 <p class="text-success">Название: <strong class="text-dark">{{object.product_name}}</strong></p>
-              <p class="text-success">Описание: <strong class="text-dark">{{object.description | truncatechars:100 }}</strong></p>
+              <p class="text-success">Описание: <strong class="text-dark">{{object.description}}</strong></p>
               <p class="text-success">Цена: <strong class="text-dark">{{object.price}}</strong></p>
               <p class="text-success">Дата создания: <strong class="text-dark">{{object.created_at | date:"d M Y"}}</strong></p>
               <div class="d-flex justify-content-between align-items-center">
