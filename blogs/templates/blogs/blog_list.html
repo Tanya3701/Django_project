@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<h1 class="text-center">МебельБлоги</h1>
+<div class="row">
+    <div class="col-9">
+    </div>
+    <div class="col-3">
+        <a class="btn btn-outline-success" href="{% url 'blogs:blog_create' %}" role="button">+ Добавить блог</a>
+    </div>
+    <div class="row mb-3" >
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+        {% for blog in object_list %}
+        <div class="col">
+          <div class="card shadow-sm h-100" >
+          <img src="{{ blog.preview | media_filter }} " class="img-fluid" alt={{blog.header}} >
+            <div class="card-body" >
+              <p class="text-center">{{blog.header}}</p>
+              <p class="text-success">Краткое содержание: <strong class="text-dark">{{blog.content | truncatechars:100 }}</strong></p>
+              <p class="text-success">Количество просмотров: <strong class="text-dark">{{blog.view_count}}</strong></p>
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="card-footer">
+              <a class="btn btn-warning" href="{% url 'blogs:blog_detail' blog.pk %}" role="button">Смотреть</a>
+              <a class="btn btn-outline-warning" href="{% url 'blogs:blog_update' blog.pk %}" role="button">Редактировать</a>
+              <a class="btn btn-danger" href="{% url 'blogs:blog_delete' blog.pk %}" role="button">Удалить</a>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
