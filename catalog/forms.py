@@ -33,6 +33,9 @@ class ProductForm(ModelForm):
         self.fields["price"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Задайте стоимость товара"}
         )
+        self.fields["inventory"].widget.attrs.update(
+            {"class": "form-check", "type": "checkbox"}
+        )
 
     def clean(self, *args, **kwargs):
         cleaned_data = super().clean()
