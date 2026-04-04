@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Category(models.Model):
     """Класс категории"""
@@ -29,6 +31,10 @@ class Product(models.Model):
     inventory = models.BooleanField(default=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+    owner = models.ForeignKey(
+        User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    published = models.BooleanField(default=False)
 
     def __str__(self):
         return self.product_name
@@ -39,3 +45,6 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         ordering = ["product_name"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]

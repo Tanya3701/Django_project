@@ -19,7 +19,7 @@ BLOCKED_WORD_LIST = [
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        exclude = ["owner"]
         error_messages = {}
 
     def __init__(self, *args, **kwargs):
@@ -36,6 +36,12 @@ class ProductForm(ModelForm):
         self.fields["inventory"].widget.attrs.update(
             {"class": "form-check", "type": "checkbox"}
         )
+
+
+class ProductModeratorsForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["published"]
 
     def clean(self, *args, **kwargs):
         cleaned_data = super().clean()

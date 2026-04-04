@@ -1,5 +1,6 @@
 import secrets
 
+from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
@@ -22,8 +23,6 @@ class UserCreateView(CreateView):
         user.save()
         host = self.request.get_host()
         url = f"http://{host}/users/email-confirm/{token}/"
-        from django.conf import settings
-
         send_mail(
             subject="Верификация",
             message=f"Здравствуйте, перейдите по ссылке для подтверждения {url}",
