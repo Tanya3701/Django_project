@@ -1,17 +1,39 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
 from catalog.forms import ProductForm, ProductModeratorsForm
 from catalog.models import Product
+from catalog.services import ProductService
 
 
 class ProductListView(ListView):
     model = Product
 
+    def get_queryset(self):
+        return ProductService.get_products_cache()
 
+
+class ProductListByCategoryView(ListView):
+
+    def get_queryset(self):
+        category_id = self.kwargs.get("category_id")
+        return ProductService.get_product_by_id(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get("category_id")
+        context["products_by_category"] = ProductService.get_product_by_id(
+            category_id=category_id
+        )
+        return context
+
+
+@method_decorator(cache_page(60 * 2), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     login_url = reverse_lazy("users:login")
@@ -46,17 +68,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         raise PermissionDenied
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
     login_url = reverse_lazy("users:login")
 
-    def delete_permission(self):
+    def test_func(self):
         user = self.request.user
-        if user != self.object.owner:
-            raise PermissionDenied
-        if not user.has_perm("catalog.can_unpublish_product"):
-            raise PermissionDenied
+        return user == self.get_object().owner or user.has_perm(
+            "catalog.delete_product"
+        )
 
 
 class ContactsView(TemplateView):
