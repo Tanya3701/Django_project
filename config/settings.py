@@ -7,7 +7,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-+l%relia=#ey0h&zd0cdig*nq&#_mwihy1+cq!5o+ks8%t8+k_"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "blogs",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -47,6 +48,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "catalog.context_processors.product_list_by_category_context_processor",
+                "catalog.context_processors.category_list_context_processor",
             ],
         },
     },
@@ -98,3 +101,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "/catalog/product_list/"
+
+LOGOUT_REDIRECT_URL = "/catalog/product_list/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = True
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+    }
+}
